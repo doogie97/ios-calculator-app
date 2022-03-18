@@ -41,10 +41,14 @@ class FormulaTest: XCTestCase {
         XCTAssertEqual(sut.result(), 0)
     }
     
-    func test_result호출시_operands큐만비어있을경우_0을반환하는지() {
-        sut.operands.removeAll()
+    func test_result호출시_operands큐가한개고연산자가하나일경우_해당수를반환하는지() {
+        //given
+        let input: Double = 4
+        //when
+        sut.operands.enqueue(input)
         sut.operations.enqueue(.add)
-        XCTAssertEqual(sut.result(), 0)
+        //then
+        XCTAssertEqual(sut.result(), input)
     }
     
     func test_result호출시_operations큐만비어있을경우_해당수를반환하는지() {

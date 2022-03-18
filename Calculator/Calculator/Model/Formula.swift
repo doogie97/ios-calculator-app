@@ -9,11 +9,11 @@ struct Formula {
 
         while !operands.isEmpty {
             let rhs = operands.dequeue()
-            let pickedOperator = operations.dequeue()
+            let pickedOperation = operations.dequeue()
             
-            for coperator in Operator.allCases {
-                if pickedOperator == coperator {
-                    result = coperator.calcuate(lhs: result, rhs: rhs ?? 0)
+            for operation in Operator.allCases {
+                if pickedOperation == operation {
+                    result = operation.calcuate(lhs: result, rhs: rhs ?? 0)
                 }
             }
         }
