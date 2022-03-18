@@ -26,10 +26,12 @@ class FormulaTest: XCTestCase {
         //given
         sut.operands.enqueue(2)
         sut.operands.enqueue(3)
+        sut.operands.enqueue(5)
         sut.operations.enqueue(.add)
+        sut.operations.enqueue(.multiply)
         //when
         let result = sut.result()
         //then
-        XCTAssertEqual(result, 5)
+        XCTAssertEqual(result, 25)
     }
 }
