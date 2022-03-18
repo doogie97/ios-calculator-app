@@ -10,19 +10,19 @@ import XCTest
 
 class FormulaTest: XCTestCase {
     var sut: Formula!
-
+    
     override func setUpWithError() throws {
         try super.setUpWithError()
         sut = Formula()
     }
-
+    
     override func tearDownWithError() throws {
         try super.tearDownWithError()
         sut = nil
     }
-
+    
     //MARK: - result()
-    func test_result호출시_2와3과plus가있을때_5를반환하는지() {
+    func test_result호출시_2와3과5_plus와multiply가있을때_25를반환하는지() {
         //given
         sut.operands.enqueue(2)
         sut.operands.enqueue(3)
@@ -33,5 +33,27 @@ class FormulaTest: XCTestCase {
         let result = sut.result()
         //then
         XCTAssertEqual(result, 25)
+    }
+    
+    func test_result호출시_큐가비어있을경우_0을반환하는지() {
+        sut.operands.removeAll()
+        sut.operations.removeAll()
+        XCTAssertEqual(sut.result(), 0)
+    }
+    
+    func test_result호출시_operands큐만비어있을경우_0을반환하는지() {
+        sut.operands.removeAll()
+        sut.operations.enqueue(.add)
+        XCTAssertEqual(sut.result(), 0)
+    }
+    
+    func test_result호출시_operations큐만비어있을경우_해당수를반환하는지() {
+        //given
+        let input: Double = 1235
+        //when
+        sut.operands.enqueue(input)
+        sut.operations.removeAll()
+        //then
+        XCTAssertEqual(sut.result(), input)
     }
 }

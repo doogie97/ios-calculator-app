@@ -5,27 +5,18 @@ struct Formula {
     var operations = CalculatorItemQueue<Operator>()
     
     mutating func result() -> Double {
-        guard !operands.isEmpty || !operations.isEmpty else { return 0}
-        var lhs: Double?
-        var rhs: Double?
-        var result: Double?
-        var op: Operator?
+        guard var result = operands.dequeue() else { return 0 }
+
         while !operands.isEmpty {
-            if lhs == nil {
-                lhs = operands.dequeue()
-            }
-            rhs = operands.dequeue()
-            op = operations.dequeue()
+            let rhs = operands.dequeue()
+            let pickedOperator = operations.dequeue()
             
-            for i in Operator.allCases {
-                
-                if op == i {
-                   result = i.calcuate(lhs: lhs!, rhs: rhs!)
-                    lhs = result
-                    rhs = nil
+            for coperator in Operator.allCases {
+                if pickedOperator == coperator {
+                    result = coperator.calcuate(lhs: result, rhs: rhs ?? 0)
                 }
             }
         }
-        return result!
+        return result
     }
 }
