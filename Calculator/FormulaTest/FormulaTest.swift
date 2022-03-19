@@ -60,4 +60,21 @@ class FormulaTest: XCTestCase {
         //then
         XCTAssertEqual(sut.result(), input)
     }
+    
+    //MARK: - ExpressionParser.parse 호출시
+    func test_parse호출후result호출시_125빼기5곱하기음수4나누기음수5이_96을반환하는지() {
+        var result = ExpressionParser.parse(from: "125")
+        sut.operands.enqueue(result.operands.dequeue()!)
+        result = ExpressionParser.parse(from: "-5")
+        sut.operands.enqueue(result.operands.dequeue()!)
+        sut.operations.enqueue(result.operations.dequeue()!)
+        result = ExpressionParser.parse(from: "×-4")
+        sut.operands.enqueue(result.operands.dequeue()!)
+        sut.operations.enqueue(result.operations.dequeue()!)
+        result = ExpressionParser.parse(from: "÷-5")
+        sut.operands.enqueue(result.operands.dequeue()!)
+        sut.operations.enqueue(result.operations.dequeue()!)
+        
+        XCTAssertEqual(sut.result(), 96)
+    }
 }

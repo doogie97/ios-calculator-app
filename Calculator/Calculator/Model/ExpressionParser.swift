@@ -1,10 +1,26 @@
 import Foundation
 
 enum ExpressionParser {
-    func parse(from input: String) -> Formula {
-    } // 여기서 반환된 Formula가 testcase에서 sut에 넣으면 될듯? 암아두
+    static func parse(from input: String) -> Formula {
+        let numberAndOperation = componentsByOperators(from: input)
+        var number = CalculatorItemQueue<Double>()
+        var operation = CalculatorItemQueue<Operator>()
+        
+        for element in numberAndOperation {
+            if let elementToDouble = Double(element) {
+                number.enqueue(elementToDouble)
+            } else {
+                Operator.allCases.forEach({ op in
+                    if String(op.rawValue) == element {
+                        operation.enqueue(op)
+                    }
+                })
+            }
+        }
+        return Formula(operands: number, operations: operation)
+    }
     
-    private func componentsByOperators(from input: String) -> [String] {
+    static private func componentsByOperators(from input: String) -> [String] {
         var resultArray: [String] = [input]
         for operation in Operator.allCases {
             if input.contains(operation.rawValue) {
