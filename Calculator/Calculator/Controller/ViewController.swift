@@ -84,10 +84,7 @@ class ViewController: UIViewController {
         guard let operandText = self.operandLabel.text else { return }
         guard let operationText = self.operationLabel.text else { return }
         addFormula(operation: operationText, operand: operandText)
-        var resultFormula = ExpressionParser.parse(from: self.formulaToSend)
-        let result = resultFormula.result()
-        let resultString = changeNumberFormat(number: String(result))
-        self.operandLabel.text = resultString == "-0" ? "0" : resultString
+        self.operandLabel.text = getResult()
         self.operationLabel.text = ""
         self.formulaToSend = ""
         self.isResult = true
@@ -123,6 +120,13 @@ class ViewController: UIViewController {
     private func addFormula(operation: String, operand: String) {
         self.formulaToSend = "\(self.formulaToSend) \(operation) \(String(changeToDouble(number: operand)))"
         addFormulaListStackView(operation: operation, operand: operand)
+    }
+    
+    private func getResult() -> String {
+        var resultFormula = ExpressionParser.parse(from: self.formulaToSend)
+        let result = resultFormula.result()
+        let resultString = changeNumberFormat(number: String(result))
+        return resultString == "-0" ? "0" : resultString
     }
 }
 // MARK: - About View
