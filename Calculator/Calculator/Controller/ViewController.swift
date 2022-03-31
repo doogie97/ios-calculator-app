@@ -44,7 +44,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func touchNumberButton(_ sender: UIButton) {
-        guard let operandText = self.operandLabel.text, operandText.count < 20 else { return }
+        guard let operandText = self.operandLabel.text, operandText.replacingOccurrences(of: ",", with: "").count < 15 else { return }
         guard let inputNumber = sender.titleLabel?.text else { return }
         if isResult == true {
             removeFormulaList()
