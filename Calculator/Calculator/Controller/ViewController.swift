@@ -91,6 +91,7 @@ class ViewController: UIViewController {
         self.operationLabel.text = ""
         self.formulaToSend = ""
         self.isResult = true
+        self.isInputZero = true
     }
     //MARK: - Functions
     private func resetCalculator() {
