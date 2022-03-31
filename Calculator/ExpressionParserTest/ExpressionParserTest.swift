@@ -2,14 +2,6 @@ import XCTest
 @testable import Calculator
 
 class ExpressionParserTest: XCTestCase {
-
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-
-    override func tearDownWithError() throws {
-        try super.tearDownWithError()
-    }
     
     func test_parse호출시_from에앞뒤공백이없는계산식을넣으면_옳바른결과를반환하는지() {
         //given

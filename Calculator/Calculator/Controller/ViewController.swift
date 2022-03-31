@@ -47,10 +47,10 @@ class ViewController: UIViewController {
         guard let operandText = self.operandLabel.text, operandText.count < 20 else { return }
         guard let inputNumber = sender.titleLabel?.text else { return }
         if isResult == true {
-            removeFormula()
+            removeFormulaList()
             self.operandLabel.text = changeNumberFormat(number: inputNumber)
         } else {
-            self.operandLabel.text = self.showZeroAfterDot(number: operandText + inputNumber)
+            self.operandLabel.text = self.checkZeroAfterDot(number: operandText + inputNumber)
         }
         self.isInputZero = true
         self.isResult = false
@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         guard let operationText = self.operationLabel.text else { return }
         if self.formulaListStackView.subviews.isEmpty && operandText == stringZero || operandText == stringNaN { return }
         if isResult == true {
-            removeFormula()
+            removeFormulaList()
             self.isResult = false
         }
         self.operationLabel.text = inputOperation
@@ -86,21 +86,22 @@ class ViewController: UIViewController {
         addFormula(operation: operationText, operand: operandText)
         var resultFormula = ExpressionParser.parse(from: self.formulaToSend)
         let result = resultFormula.result()
-        self.operandLabel.text = changeNumberFormat(number: String(result))
+        let resultString = changeNumberFormat(number: String(result))
+        self.operandLabel.text = resultString == "-0" ? "0" : resultString
         self.operationLabel.text = ""
         self.formulaToSend = ""
         self.isResult = true
     }
     //MARK: - Functions
     private func resetCalculator() {
-        removeFormula()
+        removeFormulaList()
         self.operandLabel.text = stringZero
         self.operationLabel.text = ""
         self.formulaToSend = ""
         self.isInputZero = false
     }
     
-    private func showZeroAfterDot(number: String) -> String {
+    private func checkZeroAfterDot(number: String) -> String {
         if number.contains(stringDot) && number.last == Character(stringZero) { return number }
         return changeNumberFormat(number: number)
     }
@@ -115,10 +116,16 @@ class ViewController: UIViewController {
         numberFormatter.numberStyle = .decimal
         numberFormatter.maximumFractionDigits = -2
         guard let changedNumber = numberFormatter.string(from: number as NSNumber) else { return "" }
-        if changedNumber == "-0" { return stringZero}
         return changedNumber
     }
     
+    private func addFormula(operation: String, operand: String) {
+        self.formulaToSend = "\(self.formulaToSend) \(operation) \(String(changeToDouble(number: operand)))"
+        addFormulaListStackView(operation: operation, operand: operand)
+    }
+}
+// MARK: - About View
+extension ViewController {
     private func makeStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -135,8 +142,7 @@ class ViewController: UIViewController {
         return label
     }
     
-    private func addFormula(operation: String, operand: String) {
-        self.formulaToSend = "\(self.formulaToSend) \(operation) \(String(changeToDouble(number: operand)))"
+    private func addFormulaListStackView(operation: String, operand: String) {
         let numberStackView = makeStackView()
         numberStackView.addArrangedSubview(makeLabel(element: operation))
         numberStackView.addArrangedSubview(makeLabel(element: changeNumberFormat(number: operand)))
@@ -144,7 +150,7 @@ class ViewController: UIViewController {
         self.listScrollView.scrollToBottom()
     }
     
-    private func removeFormula() {
+    private func removeFormulaList() {
         self.formulaListStackView.arrangedSubviews.forEach({
             $0.removeFromSuperview()})
     }
