@@ -1,16 +1,7 @@
 # 📱ios-calculator-app
-> 프로젝트 기간 2022.03.14 ~
+> 프로젝트 기간 2022.03.14 ~ 2022.03.25
 > 
 > ✏️ 팀원 : [Doogie](https://github.com/doogie97) / 🎤 리뷰어 : [라자냐](https://github.com/wonhee009)
-
-- [프로젝트 규칙](#프로젝트-규칙)
-- [UML](#프로젝트-규칙)
-
-## 프로젝트 규칙
-- 🕐 시간
-    - 월,화,목 AM09:00 ~ PM08:00 + α
-    - 수,금 AM09:00 ~ PM06:00
-    - 주말은 필요에 따라
 
 ## UML 
 ![](https://i.imgur.com/S7NAWZo.png)
@@ -192,3 +183,9 @@ NumberFormatter에서 자릿수를 제한하는 키워드는 위와 같이 세�
 - NumberFormatter
 
 ## PR 후 개선사항
+
+## 프로젝트 규칙
+- 🕐 시간
+    - 월,화,목 AM09:00 ~ PM08:00 + α
+    - 수,금 AM09:00 ~ PM06:00
+    - 주말은 필요에 따라
